@@ -25,10 +25,12 @@ Following softwares are installed to the vbox
 ### Node.js App
   * The sample app is in 'app' directory 
   * ssh to virtualbox
+
 ```bash
 cd app
 node server.js
 ```
+
   * go to your host box, browser and try http://localhost:8080
 
 
