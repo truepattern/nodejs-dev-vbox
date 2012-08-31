@@ -37,5 +37,6 @@ node server.js
 ## Notes
 You can use this to bootstrap your node development, or copy the cookbooks and Vagrantfile to your existing node.js setup
 
-## License
-Please refer to the cookbooks for their respective licenses (mostly Apache). 
+## License & References
+  * Please refer to the cookbooks for their respective licenses (mostly Apache). 
+  * http://blog.semmy.me/post/17222183802/node-js-getting-started-with-vagrant
