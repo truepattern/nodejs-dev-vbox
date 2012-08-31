@@ -2,17 +2,19 @@ Dev setup for Node.js with MongoDB. Based on VirtualBox, Ubuntu 12.04, Vagrant a
 
 ## Literature & Pre-requisite
 Please go thru the following links and setup these tools before proceeding
-  * VirtualBox from Oracle (virtualbox.org)
-  * Vagrant (vagrantup.com)
+  * [VirtualBox from Oracle](http://virtualbox.org)
+  * [Vagrant](http://vagrantup.com)
 
 ## Setup
-  > vagrant box add precise64 http://files.vagrantup.com/precise64.box
-  > git clone https://github.com/truepattern/nodejs-dev-vbox.git mynodejs
-  > cd mynodejs
-  > vagrant up
+```bash
+vagrant box add precise64 http://files.vagrantup.com/precise64.box
+git clone https://github.com/truepattern/nodejs-dev-vbox.git mynodejs
+cd mynodejs
+vagrant up
+```
 
 ### Packages
-Following software are installed 
+Following softwares are installed to the vbox
   * git
   * nodejs
   * mongodb
@@ -23,8 +25,10 @@ Following software are installed
 ### Node.js App
   * The sample app is in 'app' directory 
   * ssh to virtualbox
-    > cd app
-    > node server.js
+```bash
+cd app
+node server.js
+```
   * go to your host box, browser and try http://localhost:8080
 
 
