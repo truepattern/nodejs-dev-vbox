@@ -26,10 +26,10 @@ Following softwares are installed to the vbox
 ### Node.js App
   * The sample app is in 'app' directory 
   * ssh to virtualbox
-
+  
 ```bash
-cd app
-node server.js
+# node is automatically started by upstart and should be running already
+ps -aef | grep node
 ```
 
   * go to your host box, browser and try http://localhost:8080

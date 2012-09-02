@@ -41,6 +41,7 @@ Vagrant::Config.run do |config|
 
     # add mysite to webserver
     chef.add_recipe("mysite")
+    chef.add_recipe("mysite::node")
 
     # add node.js
     chef.add_recipe "nodejs"

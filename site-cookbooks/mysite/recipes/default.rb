@@ -11,15 +11,3 @@ end
 
 nginx_site "mysite"
 
-#nginx_site "mysite" do
-  #template "nginx/mysite.conf.erb"
-  #action :enable
-#end
-
-#
-#directory "/var/www/construction" do
-  #owner "www-data"
-  #group "sdmin"
-  #mode "0755"
-#end
-
