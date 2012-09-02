@@ -17,6 +17,7 @@ vagrant up
 Following softwares are installed to the vbox
   * git
   * nodejs
+  * nginx
   * mongodb
 
 ### Console
@@ -32,6 +33,7 @@ node server.js
 ```
 
   * go to your host box, browser and try http://localhost:8080
+  * nginx runs on port 80 and forwards the site to port 3000 where app runs
 
 
 ## Notes
@@ -40,3 +42,4 @@ You can use this to bootstrap your node development, or copy the cookbooks and V
 ## License & References
   * Please refer to the cookbooks for their respective licenses (mostly Apache). 
   * http://blog.semmy.me/post/17222183802/node-js-getting-started-with-vagrant
+  * https://github.com/opscode-cookbooks
