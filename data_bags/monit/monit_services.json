@@ -1,0 +1,14 @@
+{
+  "id": "monit_services",
+  "nginx": {
+    "process_name": "nginx",
+    "pidfile":      "/var/run/nginx.pid",
+    "start_command":"/etc/init.d/nginx start",
+    "stop_command": "/etc/init.d/nginx stop",
+    "check_port": "80",
+    "check_protocol": "http",
+    "check_times": 1,
+    "within_cycles": 2,
+    "then_action": "restart"
+  }
+}

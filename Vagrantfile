@@ -1,26 +1,38 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant::Config.run do |config|
+Vagrant.configure("2") do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "precise64"
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
-  config.vm.forward_port 80, 8080
+  config.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
 
-  # Share an additional folder to the guest VM. The first argument is
-  # an identifier, the second is the path on the guest to mount the
-  # folder, and the third is the path on the host to the actual folder.
-  #config.vm.share_folder "v-root", "/vagrant", "."
-  config.vm.share_folder "app", "/home/vagrant/app", "app"
-  config.vm.host_name = "dev-nodejs"
+  #The first parameter is a path to a directory on the host machine. If
+  #the path is relative, it is relative to the project root. The second
+  #parameter must be an absolute path of where to share the folder within
+  #the guest machine. This folder will be created (recursively, if it
+  #must) if it doesn't exist
+  #config.vm.synced_folder "src/", "/srv/website"
+  config.vm.synced_folder "app", "/home/vagrant/app"
 
-  # allow for symlinks in the app folder
-  config.vm.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/app", "1"]
-  config.vm.customize do |vm|
-    vm.memory_size = 1024
+  config.vm.provider :virtualbox do |v|
+    # Setting VM name and increasing RAM size
+    v.customize [
+      "modifyvm", :id,
+      "--memory", "1024",
+      "--name"  , "devnodejs"
+    ]
+    # Boot with a GUI so you can see the screen. (Default is headless)
+    # v.gui = true
+
+    # without this symlinks can't be created on the shared folder
+    v.customize [
+      "setextradata", :id,
+      "VBoxInternal2/SharedFoldersEnableSymlinksCreate/app", "1"
+    ]
   end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
@@ -38,6 +50,7 @@ Vagrant::Config.run do |config|
     # add roles
     chef.add_role("db_master")
     chef.add_role("webserver")
+    chef.add_role("monit")
 
     # add mysite to webserver
     chef.add_recipe("mysite")

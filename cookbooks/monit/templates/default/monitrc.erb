@@ -1,0 +1,54 @@
+set daemon <%= @poll_period %> with start delay <%= @poll_start_delay %>
+
+<% unless @logfile.nil? %>set logfile <%= @logfile %><% end %>
+
+set eventqueue
+    basedir <%= @queue[:location] %>
+    <% unless @queue[:slots].nil? %>slots <%= @queue[:slots] %><% end %>
+
+<% unless @mail[:server].nil? %>
+set mailserver <%= @mail[:server] %>
+    <%= "PORT #{@mail[:port]}" unless not @mail[:port] %>
+    <% if @mail[:username] && @mail[:password] -%>
+    USERNAME <%= @mail[:username] %> PASSWORD "<%= @mail[:password] %>"
+    <% end -%>
+    <%= "USING #{@mail[:security]}" unless not @mail[:security] %>
+    <%= "CERTMD5 #{@mail[:checksum]}" unless not @mail[:checksum] %>
+    <%= "with TIMEOUT #{@mail[:timeout]} SECONDS" unless not @mail[:timeout] %>
+    <%= "using HOSTNAME #{@node.fqdn}" unless not @mail[:use_node_fqdn] %>
+
+set mail-format { 
+  <% if @mail[:format][:from] %>from: <%= @mail[:format][:from] %>
+  <% else %>from: monit@<%= @node.fqdn %><% end %>
+  subject: <%= @mail[:format][:subject] %>
+  message: <%= @mail[:format][:message].to_s.strip %>
+}
+<% end %>
+
+<% if @notify[:enable] %>
+set alert <%= @notify[:email] %> <%= "NOT" if @notify[:negate_events] -%> ON { 
+    <%= @notify[:events].join(", ") %>
+}
+<% end %>
+
+<% if @httpd[:enable] %>
+set httpd port <%= @httpd[:port] %> and
+    <% if @httpd[:address] %>
+    use address <%= @httpd[:address] %>
+    <% end %>
+    <% if @httpd[:allow] %>
+        <% @httpd[:allow].each do |allow| %>
+        allow <%= allow %>
+        <% end %>
+    <% end %>
+    signature <%= @httpd[:signature] %>
+    <% @httpd[:basic_auth_accounts].each do |auth| %>
+    <%# 
+    NOTE: auth entries are of the form "username:password", but passwords
+    need to be quoted in the monit config:  'username:"password"'
+    -%>
+    allow <%= auth.split(":").first -%>:"<%= auth.split(":").last -%>"
+    <% end %>
+<% end %>
+
+include <%= @config_directory %>/*.conf

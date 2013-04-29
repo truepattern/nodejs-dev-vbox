@@ -23,6 +23,12 @@ Following softwares are installed to the vbox
 ### Console
   * vagrant ssh 
 
+### Start
+  * vagrant up
+  
+### Stop
+  * vagrant halt
+
 ### Node.js App
   * The sample app is in 'app' directory 
   * ssh to virtualbox

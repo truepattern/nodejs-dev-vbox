@@ -1,0 +1,4 @@
+CHECK PROCESS <%= @conf["process_name"] %> WITH PIDFILE <%= @conf["pidfile"] %>
+  START PROGRAM "<%= @conf["start_command"] %>"
+  STOP PROGRAM "<%= @conf["stop_command"] %>"
+  IF FAILED <% if @conf["check_port"] %>PORT <%= @conf["check_port"] %><% elsif @conf["check_socket"] %>unixsocket <%= @conf["check_socket"] %><% end %><% if @conf["check_protocol"] %> PROTOCOL <%= @conf["check_protocol"] %><% end %><% if @conf["check_times"] && @conf["within_cycles"] %> <%= @conf["check_times"] %> TIMES WITHIN <%= @conf["within_cycles"] %> CYCLES<% end %><% if @conf["then_action"] %> THEN <%= @conf["then_action"] %><% end %>
